@@ -1,10 +1,12 @@
 package com.codeline.sampleProject.Controller;
 
 import com.codeline.sampleProject.Models.Account;
-import com.codeline.sampleProject.Models.Employee;
+import com.codeline.sampleProject.RequestObjects.GetAccountRequestObject;
+import com.codeline.sampleProject.ResponseObjects.GetAccountResponse;
 import com.codeline.sampleProject.Service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,20 +20,23 @@ public class AccountController {
     AccountService accountService;
 
     @RequestMapping("account/create")
-    public void saveAccount () {
-        createAccount();}
+    public void saveAccount (@RequestBody GetAccountRequestObject accountRequestObject) {
+        createAccount(accountRequestObject);}
 
     @RequestMapping("account/get")
     public List<Account> getAccount () {
         return accountService.getAccount();
     }
 
-
-    public void createAccount() {
+    @RequestMapping("account/get/{accountId}")
+    public GetAccountResponse createAccount (@PathVariable Long accountId) {
+        return accountService.getAccountById(accountId);
+    }
+    public void createAccount(GetAccountRequestObject accountRequestObject) {
         Account account= new Account();
-        account.setBankName("Muscat");
-        account.setAccountNumber("45454");
-        account.setBankBranch("Muscat");
+        account.setBankName(accountRequestObject.getBankName());
+        account.setAccountNumber(accountRequestObject.getAccountNumber());
+        account.setBankBranch(accountRequestObject.getBankBranch());
         account.setSwiftCode("MUS1100");
         account.setAccountHolderName("Ibrahim");
         account.setAccountType("Normal");
