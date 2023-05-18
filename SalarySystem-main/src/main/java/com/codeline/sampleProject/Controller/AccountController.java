@@ -4,11 +4,10 @@ import com.codeline.sampleProject.Models.Account;
 import com.codeline.sampleProject.RequestObjects.GetAccountRequestObject;
 import com.codeline.sampleProject.ResponseObjects.GetAccountResponse;
 import com.codeline.sampleProject.Service.AccountService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -31,6 +30,19 @@ public class AccountController {
     @RequestMapping("account/get/{accountId}")
     public GetAccountResponse createAccount (@PathVariable Long accountId) {
         return accountService.getAccountById(accountId);
+    }
+
+    @GetMapping("account/quer")
+    @ResponseBody
+    public String getaccountQueryString(@RequestParam String a,@RequestParam String b,@RequestParam String c) throws JsonProcessingException {
+        Account account = new Account();
+        account.setBankName(a);
+        account.setAccountNumber(b);
+        account.setBankBranch(c);
+        ObjectMapper mapper = new ObjectMapper();
+        String s = mapper.writeValueAsString(accountService.getAccountAsString(account));
+        System.out.print(s);
+        return s;
     }
     public void createAccount(GetAccountRequestObject accountRequestObject) {
         Account account= new Account();
