@@ -22,6 +22,16 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
+    public GetAccountResponse getAccountById(Long accountId) {
+        Optional<Account> optionalAccount =  accountRepository.findById(accountId);
+        if(!optionalAccount.isEmpty())
+        {
+            Account account =  optionalAccount.get();
+            GetAccountResponse accountResponse = new GetAccountResponse(account.getBankName(), account.getAccountNumber(), account.getBankBranch());
+            return accountResponse;
+        }
+        return null;
+    }
 
 
     public GetAccountResponse getAccountAsString(Account account) {
