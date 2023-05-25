@@ -22,6 +22,8 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
+
+
     public GetAccountResponse getAccountById(Long accountId) {
         Optional<Account> optionalAccount =  accountRepository.findById(accountId);
         if(!optionalAccount.isEmpty())
