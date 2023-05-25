@@ -38,9 +38,7 @@ public class AccountController {
         account.setBankName(bankname);
         account.setAccountNumber(accountnumber);
         account.setBankBranch(branch);
-        String s = mapper.writeValueAsString(accountService.getAccountAsString(account));
-        System.out.print(s);
-        return s;
+
     }
 
 
