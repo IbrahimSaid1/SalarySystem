@@ -43,12 +43,6 @@ public class AccountController {
         return s;
     }
 
-
-    @RequestMapping("account/delete/{Id}")
-    public void deleteaccount (@PathVariable Long Id) {
-        accountService.deleteAccountById(Id);
-    }
-
     public void createAccount(GetAccountRequestObject accountRequestObject) {
         Account account= new Account();
         account.setBankName(accountRequestObject.getBankName());
