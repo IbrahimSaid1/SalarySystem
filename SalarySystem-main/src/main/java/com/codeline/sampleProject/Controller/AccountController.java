@@ -5,7 +5,6 @@ import com.codeline.sampleProject.RequestObjects.GetAccountRequestObject;
 import com.codeline.sampleProject.ResponseObjects.GetAccountResponse;
 import com.codeline.sampleProject.Service.AccountService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +31,17 @@ public class AccountController {
         return accountService.getAccountById(accountId);
     }
 
-
+    @GetMapping("account/quer")
+    @ResponseBody
+    public String getaccountQueryString(@RequestParam String bankname,@RequestParam String accountnumber,@RequestParam String branch) throws JsonProcessingException {
+        Account account = new Account();
+        account.setBankName(bankname);
+        account.setAccountNumber(accountnumber);
+        account.setBankBranch(branch);
+        String s = mapper.writeValueAsString(accountService.getAccountAsString(account));
+        System.out.print(s);
+        return s;
+    }
 
 
     @RequestMapping("account/delete/{Id}")
