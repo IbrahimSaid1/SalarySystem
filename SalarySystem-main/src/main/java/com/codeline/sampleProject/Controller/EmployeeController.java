@@ -4,12 +4,10 @@ import com.codeline.sampleProject.Models.Employee;
 import com.codeline.sampleProject.RequestObjects.GetEmployeeRequestObject;
 import com.codeline.sampleProject.ResponseObjects.GetEmployeeResponse;
 import com.codeline.sampleProject.Service.EmployeeService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -34,15 +32,24 @@ public class EmployeeController {
         return employeeService.getEmployeeById(employeeId);
     }
 
+    @GetMapping("employee/quer")
+    @ResponseBody
+    public String getemployeeQueryString(@RequestParam String name,@RequestParam String department,@RequestParam String gender, @RequestParam Double salary ) throws JsonProcessingException {
+        Employee employee = new Employee();
+        employee.setName(name);
+        employee.setDepartment(department);
+        employee.setGender(gender);
+        employee.setSalary(salary);
+        String s = mapper.writeValueAsString(employeeService.getEmployeeAsString(employee));
+        System.out.print(s);
+        return s;
+    }
 
-    String baseUrl = "https://example.com/employees";
-    String employeeId = "1";
 
-    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(baseUrl)
-            .queryParam("id", employeeId);
-
-    String urlString = builder.toUriString();
-
+    @RequestMapping("employee/delete/{Id}")
+    public void deleteeemployee (@PathVariable Long Id) {
+        employeeService.deleteEmployeeById(Id);
+    }
 
     public void createEmployee(GetEmployeeRequestObject employeeRequestObject) {
 
@@ -53,6 +60,7 @@ public class EmployeeController {
         employee.setDepartment(employeeRequestObject.getDepartment());
         employee.setCompanyName("TechM");
         employee.setCreatedDate(new Date());
+        employee.setUpdatedDate(new Date());
         employee.setIsActive(true);
         employeeService.saveEmployee(employee);
     }
