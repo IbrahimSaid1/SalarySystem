@@ -21,7 +21,7 @@ public class SalaryController {
     SalaryService salaryService;
 
     @RequestMapping("salary/create")
-    public void saveSalary(@RequestBody GetSalaryRequestObject salaryRequestObject) {
+    public void saveSalary(GetSalaryRequestObject salaryRequestObject) {
         createSalary(salaryRequestObject);}
 
     @RequestMapping("salary/get")
