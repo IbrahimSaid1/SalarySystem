@@ -34,16 +34,21 @@ public class AccountController {
 
     @GetMapping("account/quer")
     @ResponseBody
-    public String getaccountQueryString(@RequestParam String a,@RequestParam String b,@RequestParam String c) throws JsonProcessingException {
+    public String getaccountQueryString(@RequestParam String bankname,@RequestParam String accountnumber,@RequestParam String branch) throws JsonProcessingException {
         Account account = new Account();
-        account.setBankName(a);
-        account.setAccountNumber(b);
-        account.setBankBranch(c);
-        ObjectMapper mapper = new ObjectMapper();
-        String s = mapper.writeValueAsString(accountService.getAccountAsString(account));
+        account.setBankName(bankname);
+        account.setAccountNumber(accountnumber);
+        account.setBankBranch(branch);
         System.out.print(s);
         return s;
     }
+
+
+    @RequestMapping("account/delete/{Id}")
+    public void deleteaccount (@PathVariable Long Id) {
+        accountService.deleteAccountById(Id);
+    }
+
     public void createAccount(GetAccountRequestObject accountRequestObject) {
         Account account= new Account();
         account.setBankName(accountRequestObject.getBankName());
