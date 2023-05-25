@@ -38,4 +38,8 @@ public class AccountService {
         GetAccountResponse accountResponse = new GetAccountResponse(account.getBankName(), account.getAccountNumber(), account.getBankBranch());
         return accountResponse;
     }
+
+    public void deleteAccountById(Long accountId) {
+        accountRepository.deleteById(accountId);
+    }
 }
