@@ -40,10 +40,6 @@ public class AccountService {
 
 
 
-
-
-
-
     public GetAccountResponse getAccountAsString(Account account) {
         GetAccountResponse accountResponse = new GetAccountResponse(account.getBankName(), account.getAccountNumber(), account.getBankBranch());
         return accountResponse;
