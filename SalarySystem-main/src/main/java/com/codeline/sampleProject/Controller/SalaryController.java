@@ -34,9 +34,6 @@ public class SalaryController {
         return salaryService.getSalaryById(salarytId);
     }
 
-
-
-
     public void createSalary(GetSalaryRequestObject salaryRequestObject){
         Salary salary= new Salary();
         salary.setAmount(salaryRequestObject.getAmount());
