@@ -44,11 +44,6 @@ public class SalaryController {
 
 
 
-
-
-
-
-
     public void createSalary(GetSalaryRequestObject salaryRequestObject){
         Salary salary= new Salary();
         salary.setAmount(salaryRequestObject.getAmount());
